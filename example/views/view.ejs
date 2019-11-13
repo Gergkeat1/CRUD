@@ -1,0 +1,59 @@
+<%- contentFor('header') %>
+<h1 class="page-title"></h1>
+
+<%- contentFor('footer') %>
+<h1>This is the footer</h1>
+
+<% /*
+Content for the `body` section should either be the first thing defined
+in the view, or it has to be declared just like any other section.
+*/ %>
+<%- contentFor('body') %>
+<html>
+  <br><br>
+  <form name="form1" method="POST" action="/a">
+    <table>
+        <tr>
+        <td>First name:</td>
+        <td><input type="text" name="fname" placeholder="" ></td>
+        </tr>
+        <tr>
+        <td>last name:</td>
+        <td><input type="text" name="lname" placeholder=""></td>
+        </tr>
+        <tr>
+          <td>Age:</td>
+          <td><input type="text" name="lname" placeholder=""></td>
+          </tr>
+          <tr>
+            <td>Tel:</td>
+            <td><input type="text" name="lname" placeholder=""></td>
+            </tr>
+        <tr>
+        <td colspan="2"><input type="submit" value="submit" ></td>
+        </tr>
+    </table>
+  </form>
+</html>  
+
+<% /*
+When style extraction is enabled, any custom styles that a page defines, will
+be extracted out of the content and made available in the specific placeholder.
+In our example, even though we're defining a <style> within the body, this will
+be placed, according to our layout, inside of the <head> element.
+<link> blocks to load external stylesheets are also extracted when the option
+is enabled.
+*/ %>
+
+<style>
+  .page-message { color: blue }
+</style>
+
+<% /*
+Like stylesheets, scripts can also be extracted.
+This script block will end up at the end of the HTML document.
+*/ %>
+<script>
+  // Script content!
+</script>
+
