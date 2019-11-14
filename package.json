@@ -10,7 +10,14 @@
   "version": "2.5.0",
   "main": "lib/express-layouts.js",
   "dependencies": {
-    "body-parser": "^1.19.0"
+    "body-parser": "^1.19.0",
+    "mariadb": "^2.1.2",
+    "mysql2": "^2.0.0",
+    "pg": "^7.12.1",
+    "pg-hstore": "^2.3.3",
+    "sequelize": "^5.21.2",
+    "sqlite3": "^4.1.0",
+    "tedious": "^6.6.2"
   },
   "devDependencies": {
     "express": "*",
