@@ -3,11 +3,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-<script>
-  // Script content!
-</script>
-
-<%- contentFor('footer') %>
 
 <% /*
 Content for the `body` section should either be the first thing defined
@@ -15,33 +10,31 @@ in the view, or it has to be declared just like any other section.
 */ %>
 <%- contentFor('body') %>
 
-<html>
-<br><br>
-<form name="form1" method="POST" action="/a">
-  <table>
-    <tr>
-      <td>First Name:</td>
-      <td><input type="text" name="fname" placeholder=""></td>
+<table class="table table-bordered" style="text-align: center;">
+  <thead>
+    <tr class="success">
+      <th>Number</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Age</th>
+      <th>Tel.</th>
     </tr>
-    <tr>
-      <td>Last Name:</td>
-      <td><input type="text" name="lname" placeholder=""></td>
+  </thead>
+  <tbody>
+    <% result.forEach(function(data) { %>
+    <tr class="success">
+      <td><%= data.id %></td>
+      <td><%= data.fname %></td>
+      <td><%= data.lname %></td>
+      <td><%= data.age %></td>
+      <td><%= data.tel %></td>
     </tr>
-    <tr>
-      <td>Age:</td>
-      <td><input type="text" name="age" placeholder=""></td>
-    </tr>
-    <tr>
-      <td>Tel:</td>
-      <td><input type="text" name="tel" placeholder=""></td>
-    </tr>
-    <tr>
-      <td colspan="2"><button type="submit" name="update" value="2" class="btn btn-primary">Insert</button></td>
-    </tr>
-  </table>
-</form>
-
-</html>
+    <% }); %>
+  </tbody>
+  <tr>
+    <td colspan="5"><a href="/" type="submit" class="btn btn-primary">Back</a></td>
+  </tr>
+</table>
 
 <% /*
 When style extraction is enabled, any custom styles that a page defines, will
@@ -62,3 +55,10 @@ is enabled.
 Like stylesheets, scripts can also be extracted.
 This script block will end up at the end of the HTML document.
 */ %>
+<script>
+  // Script content!
+
+  var express = require('express');
+  var app = express();
+
+</script>

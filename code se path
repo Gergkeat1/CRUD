@@ -1,0 +1,117 @@
+//คำสั่ง Install Nodejs
+sudo apt install curl
+curl -sL https://deb.nodesource.com/setup_8.x | sudo bash -
+sudo apt install nodejs
+nano <filename.js> //สร้างไฟล์ .js
+node <filename.js> //Run ไฟล์
+
+//Example .js show
+const http = require('http');
+const hostname = '127.0.0.1';
+const port = 3000;
+const server = http.createServer((req, res) => {
+  res.statusCode = 200;
+  res.setHeader('Content-Type', 'text/plain');
+  res.end('Hello World\n');
+});
+server.listen(port, hostname, () => {
+  console.log(`Server running at http://${hostname}:${port}/`);
+});
+
+
+
+//คำสั่ง Install Express Framework
+npm install express
+npx express-generator //Generat File Express Framework
+npm install
+npm install -g express-generator //ลงไฟล์ Node_Modules
+npm start //รัน Express 
+
+//แก้พาทในการลง Express Framework
+mkdir ~/.npm-global
+
+npm config set prefix '~/.npm-global'
+
+export PATH=~/.npm-global/bin:$PATH
+
+source ~/.profile
+
+npm install -g jshint
+
+
+//คำสั่ง Install MySQL
+sudo apt update
+sudo apt install mysql-server
+sudo mysql_secure_installation //คำสั่ง Config MySQL
+sudo mysql
+SELECT user,authentication_string,plugin,host FROM mysql.user; //Check การ Authentication
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password'; //ตั้ง Password
+FLUSH PRIVILEGES;
+mysql -u root -p //การเข้าใช้ Command MySQL
+systemctl status mysql.service //เช็ค Status การทำงานของ Service MySQL
+
+
+//คำสั่ง Install React Native
+npm install -g react-native-cli
+curl -0 -L https://npmjs.org/install.sh | sudo sh //ถ้าขึ้น Cannot find module ‘npmlog’
+
+//Install Java Development Kit
+sudo add-apt-repository ppa:webupd8team/java
+sudo apt update
+sudo apt install oracle-java8-installer
+sudo apt install oracle-java8-set-default //Set default Version Java
+
+//Creating a Sample application React Native
+react-native init SampleProject
+react-native run-android //Run App
+
+//คำสั่ง express-ejs-layouts
+npm install ejs
+npm install express-ejs-layouts
+npm install
+
+//Example .ejs 
+var express = require('express');
+var expressLayouts = require('express-ejs-layouts');
+ 
+var app = express();
+ 
+app.set('view engine', 'ejs');
+ 
+app.use(expressLayouts);
+ 
+app.get('/', function(req, res) {
+  var locals = {
+    title: 'Page Title',
+    description: 'Page Description',
+    header: 'Page Header'
+  };
+  res.render('the-view', locals);
+});
+ 
+app.listen(3000);
+
+
+
+//คำสั่ง Install Sequelize
+npm install --save sequelize
+npm install --save pg pg-hstore
+npm install --save mysql2
+npm install --save mariadb
+npm install --save sqlite3
+npm install --save tedious
+
+
+//Reset Password root on Database
+sudo /etc/init.d/mysql stop
+sudo mkdir /var/run/mysqld
+sudo chown mysql /var/run/mysqld
+sudo mysqld_safe --skip-grant-tables&
+
+sudo mysql --user=root mysql //Change MySQL Root Password
+update user set authentication_string=PASSWORD('your_password_here') where user='root';
+update user set Password=PASSWORD('your_password_here') where user='root';
+update user set plugin="mysql_native_password" where User='root';
+flush privileges;
+sudo killall -u mysql
+sudo /etc/init.d/mysql start
