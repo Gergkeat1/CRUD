@@ -38,8 +38,18 @@ app.get('/', function (req, res) {
 
   res.locals = {
     title: 'Test',
-    fname: 'fname',
-    lname: 'lname',
+  };
+
+  res.render('index', {
+
+  });
+
+});
+
+app.get('/add', function (req, res) {
+
+  res.locals = {
+    title: 'Test',
   };
 
   res.render('view', {
@@ -48,7 +58,11 @@ app.get('/', function (req, res) {
 
 });
 
-app.get('/a', function (req, res) {
+app.post('/a', function (req, res) {
+
+  res.locals = {
+    title: 'Test',
+  };
 
   var conn = mysql.createConnection({
     host: 'localhost',
@@ -71,9 +85,21 @@ app.get('/a', function (req, res) {
   conn.query(sql, [fname, lname, age, tel], function (err, data) {
     if (err) {
       console.log("Error inserted into db");
+      res.redirect('a');
     } else {
       console.log("Successfully inserted into db");
+      res.redirect('a');
     }
+  });
+});
+
+app.get('/a', function (req, res) {
+
+  var conn = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'test'
   });
 
   var sql = "SELECT * FROM test_profile";
