@@ -9,7 +9,7 @@ Content for the `body` section should either be the first thing defined
 in the view, or it has to be declared just like any other section.
 */ %>
 <%- contentFor('body') %>
-
+<form name="form1" method="GET" action="/update">
 <table class="table table-bordered" style="text-align: center;">
   <thead>
     <tr class="success">
@@ -21,20 +21,19 @@ in the view, or it has to be declared just like any other section.
     </tr>
   </thead>
   <tbody>
-    <% result.forEach(function(data) { %>
     <tr class="success">
-      <td><%= data.id %></td>
-      <td><%= data.fname %></td>
-      <td><%= data.lname %></td>
-      <td><%= data.age %></td>
-      <td><%= data.tel %></td>
+      <td><%= id %></td>
+      <td><input type="text" name="fname" placeholder="<%= fname %>"></td>
+      <td><input type="text" name="lname" placeholder="<%= lname %>"></td>
+      <td><input type="text" name="age" placeholder="<%= age %>"></td>
+      <td><input type="text" name="tel" placeholder="<%= tel %>"></td>
     </tr>
-    <% }); %>
   </tbody>
   <tr>
-    <td colspan="5"><a href="/" type="submit" class="btn btn-primary">Back</a></td>
+    <td colspan="5"><button type="submit" name="update" value="<%= id %>" class="btn btn-primary">Update</button></td>
   </tr>
 </table>
+</form>
 
 <% /*
 When style extraction is enabled, any custom styles that a page defines, will

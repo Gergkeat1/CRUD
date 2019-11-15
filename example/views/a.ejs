@@ -30,7 +30,7 @@ in the view, or it has to be declared just like any other section.
       <td><%= data.age %></td>
       <td><%= data.tel %></td>
       <td>
-        <a><img src="images/edit.png" width="30" height="30"></a>
+        <a href="/b?id=<%= data.id %>"><img src="images/edit.png" width="30" height="30"></a>
         <a href="/delete?id=<%= data.id %>"><img src='images/delete.png' onclick="return confirm('Do you want to Delete ??')" width='30' height='30'></a>
       </td>
     </tr>

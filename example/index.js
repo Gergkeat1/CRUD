@@ -3,11 +3,13 @@ var express = require('express');
 var expressLayouts = require('..');
 var mysql = require('mysql');
 var http = require('http');
+var url = require('url');
+var conn = require('./connection');
 
 var app = express();
 var router = express.Router();
 
-var url = require('url');
+
 const server = http.createServer((req, res) => {
   res.setHeader('Content-Type', 'text/html');
   res.setHeader('X-Foo', 'bar');
@@ -39,18 +41,6 @@ app.get('/', function (req, res) {
     fname: 'fname',
     lname: 'lname',
   };
-  var conn = mysql.createConnection({
-
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'test'
-  });
-
-  conn.connect(function (err) {
-    if (err) throw err;
-    console.log("Connected!");
-  });
 
   res.render('view', {
 
@@ -58,10 +48,9 @@ app.get('/', function (req, res) {
 
 });
 
-app.post('/a', function (req, res) {
+app.get('/a', function (req, res) {
 
   var conn = mysql.createConnection({
-
     host: 'localhost',
     user: 'root',
     password: '',
@@ -73,10 +62,10 @@ app.post('/a', function (req, res) {
     console.log("Connected!");
   });
 
-  var fname = req.body.fname,
-    lname = req.body.lname,
-    age = req.body.age,
-    tel = req.body.tel;
+  var fname = req.body.fname, 
+  lname = req.body.lname, 
+  age = req.body.age, 
+  tel = req.body.tel;
 
   var sql = "INSERT INTO test_profile (fname, lname, age, tel) VALUES ('" + fname + "', '" + lname + "', '" + age + "', '" + tel + "')";
   conn.query(sql, [fname, lname, age, tel], function (err, data) {
@@ -108,11 +97,64 @@ app.get('/delete', function (req, res) {
     var sql = "DELETE FROM test_profile WHERE id = '" + id + "'";
     conn.query(sql, function (err, result) {
       if (err) throw err;
-      console.log("Number of records deleted"+ result.affectedRows);
-      var sql = "SELECT * FROM test_profile";
-      conn.query(sql, function (err, result) {
-        res.render('a', { result: result });
-      });
+      console.log("Number of records deleted" + result.affectedRows);
+      res.redirect('a');
+    });
+  });
+
+});
+
+app.get('/b', function (req, res) {
+  var conn = mysql.createConnection({
+
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'test'
+  });
+
+  conn.connect(function (err) {
+    if (err) throw err;
+    console.log("Connected!");
+  });
+  var id = req.query.id;
+  var sql = "SELECT * FROM test_profile WHERE id = '" + id + "'";
+  conn.query(sql, function (err, result) {
+    result.forEach(function (data) {
+      var fname = data.fname;
+      var lname = data.lname;
+      var age = data.age;
+      var tel = data.tel;
+      res.render('b', { fname: fname, lname: lname, age: age, tel: tel, id: id });
+    });
+  });
+});
+
+app.get('/update', function (req, res) {
+
+  var fname = req.query.fname, 
+  lname = req.query.lname, 
+  age = req.query.age, 
+  tel = req.query.tel;
+
+  var conn = mysql.createConnection({
+
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'test'
+  });
+
+  conn.connect(function (err) {
+    if (err) throw err;
+    console.log("Connected!");
+    var id = req.query.update;
+    console.log("ID is = " + id);
+    var sql = "UPDATE test_profile SET fname = '" + fname + "', lname = '" + lname + "', age = '" + age + "', tel = '" + tel + "' WHERE id = '" + id + "'";
+    conn.query(sql, function (err, result) {
+      if (err) throw err;
+      console.log(result.affectedRows + " record(s) updated");
+      res.redirect('a');
     });
   });
 
