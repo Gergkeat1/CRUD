@@ -4,7 +4,6 @@ var expressLayouts = require('..');
 var mysql = require('mysql');
 var http = require('http');
 var url = require('url');
-var conn = require('./connection');
 
 var app = express();
 var router = express.Router();
@@ -52,13 +51,13 @@ app.get('/add', function (req, res) {
     title: 'Test',
   };
 
-  res.render('view', {
+  res.render('add', {
 
   });
 
 });
 
-app.post('/a', function (req, res) {
+app.post('/add', function (req, res) {
 
   res.locals = {
     title: 'Test',
@@ -85,15 +84,15 @@ app.post('/a', function (req, res) {
   conn.query(sql, [fname, lname, age, tel], function (err, data) {
     if (err) {
       console.log("Error inserted into db");
-      res.redirect('a');
+      res.redirect('/show');
     } else {
       console.log("Successfully inserted into db");
-      res.redirect('a');
+      res.redirect('/show');
     }
   });
 });
 
-app.get('/a', function (req, res) {
+app.get('/show', function (req, res) {
 
   var conn = mysql.createConnection({
     host: 'localhost',
@@ -104,7 +103,7 @@ app.get('/a', function (req, res) {
 
   var sql = "SELECT * FROM test_profile";
   conn.query(sql, function (err, result) {
-    res.render('a', { result: result });
+    res.render('show', { result: result });
   });
 });
 
@@ -124,13 +123,13 @@ app.get('/delete', function (req, res) {
     conn.query(sql, function (err, result) {
       if (err) throw err;
       console.log("Number of records deleted" + result.affectedRows);
-      res.redirect('a');
+      res.redirect('show');
     });
   });
 
 });
 
-app.get('/b', function (req, res) {
+app.get('/edit', function (req, res) {
   var conn = mysql.createConnection({
 
     host: 'localhost',
@@ -151,7 +150,7 @@ app.get('/b', function (req, res) {
       var lname = data.lname;
       var age = data.age;
       var tel = data.tel;
-      res.render('b', { fname: fname, lname: lname, age: age, tel: tel, id: id });
+      res.render('edit', { fname: fname, lname: lname, age: age, tel: tel, id: id });
     });
   });
 });
@@ -180,7 +179,7 @@ app.get('/update', function (req, res) {
     conn.query(sql, function (err, result) {
       if (err) throw err;
       console.log(result.affectedRows + " record(s) updated");
-      res.redirect('a');
+      res.redirect('show');
     });
   });
 
@@ -190,3 +189,5 @@ var port = 3000;
 app.listen(port, function () {
   console.log('Listening on http://localhost:%s/', port);
 });
+
+module.exports = router;
