@@ -33,6 +33,14 @@ app.set('layout extractStyles', true)
 app.use(expressLayouts);
 app.use(express.static('public'));
 
+app.get('/login', function (req, res) {
+
+  res.render('login', {
+
+  });
+
+});
+
 app.get('/', function (req, res) {
 
   res.locals = {
@@ -66,7 +74,7 @@ app.post('/add', function (req, res) {
   var conn = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: '',
+    password: 'root',
     database: 'test'
   });
 
@@ -75,13 +83,15 @@ app.post('/add', function (req, res) {
     console.log("Connected!");
   });
 
-  var fname = req.body.fname, 
+  var fname = req.body.fname,
+  username = req.body.username,  
+  password = req.body.password, 
   lname = req.body.lname, 
   age = req.body.age, 
   tel = req.body.tel;
 
-  var sql = "INSERT INTO test_profile (fname, lname, age, tel) VALUES ('" + fname + "', '" + lname + "', '" + age + "', '" + tel + "')";
-  conn.query(sql, [fname, lname, age, tel], function (err, data) {
+  var sql = "INSERT INTO test_profile (username,password,fname, lname, age, tel) VALUES ('" + username + "','" + password + "','" + fname + "', '" + lname + "', '" + age + "', '" + tel + "')";
+  conn.query(sql, [username,password,fname, lname, age, tel], function (err, data) {
     if (err) {
       console.log("Error inserted into db");
       res.redirect('/show');
@@ -97,7 +107,7 @@ app.get('/show', function (req, res) {
   var conn = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: '',
+    password: 'root',
     database: 'test'
   });
 
@@ -111,7 +121,7 @@ app.get('/delete', function (req, res) {
   var conn = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: '',
+    password: 'root',
     database: 'test'
   });
   conn.connect(function (err, result) {
@@ -134,7 +144,7 @@ app.get('/edit', function (req, res) {
 
     host: 'localhost',
     user: 'root',
-    password: '',
+    password: 'root',
     database: 'test'
   });
 
@@ -146,11 +156,14 @@ app.get('/edit', function (req, res) {
   var sql = "SELECT * FROM test_profile WHERE id = '" + id + "'";
   conn.query(sql, function (err, result) {
     result.forEach(function (data) {
+      
+      var username = data.username;
+      var password = data.password;
       var fname = data.fname;
       var lname = data.lname;
       var age = data.age;
       var tel = data.tel;
-      res.render('edit', { fname: fname, lname: lname, age: age, tel: tel, id: id });
+      res.render('edit', { username: username,password: password,fname: fname, lname: lname, age: age, tel: tel, id: id });
     });
   });
 });
@@ -158,6 +171,8 @@ app.get('/edit', function (req, res) {
 app.get('/update', function (req, res) {
 
   var fname = req.query.fname, 
+  username = req.body.username,  
+  password = req.body.password,
   lname = req.query.lname, 
   age = req.query.age, 
   tel = req.query.tel;
@@ -166,7 +181,7 @@ app.get('/update', function (req, res) {
 
     host: 'localhost',
     user: 'root',
-    password: '',
+    password: 'root',
     database: 'test'
   });
 
@@ -175,7 +190,7 @@ app.get('/update', function (req, res) {
     console.log("Connected!");
     var id = req.query.update;
     console.log("ID is = " + id);
-    var sql = "UPDATE test_profile SET fname = '" + fname + "', lname = '" + lname + "', age = '" + age + "', tel = '" + tel + "' WHERE id = '" + id + "'";
+    var sql = "UPDATE test_profile SET username = '" + username + "',password = '" + password + "',fname = '" + fname + "', lname = '" + lname + "', age = '" + age + "', tel = '" + tel + "' WHERE id = '" + id + "'";
     conn.query(sql, function (err, result) {
       if (err) throw err;
       console.log(result.affectedRows + " record(s) updated");

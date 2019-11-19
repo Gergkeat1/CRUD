@@ -10,14 +10,7 @@ in the view, or it has to be declared just like any other section.
 */ %>
 <%- contentFor('footer') %>
 
-<table class="table table-bordered" style="text-align: center;">
-  <tr>
-    <td"><a href="/add" type="submit" class="btn btn-primary">Insert</a></td>
-  </tr>
-  <tr>
-    <td"><a href="/show" type="submit" class="btn btn-primary">Show</a></td>
-  </tr>
-</table>
+
 
 <% /*
 When style extraction is enabled, any custom styles that a page defines, will
@@ -30,11 +23,33 @@ is enabled.
 
 <%- contentFor('body') %>
 
-<style>
-  .page-message {
-    color: blue
-  }
-</style>
+
+
+<h2>Login Form</h2>
+
+<form action="/login" method="post">
+  <div class="imgcontainer">
+    <img src="images/img_avatar2.png" alt="Avatar" class="avatar">
+  </div>
+
+  <div class="container">
+    <label for="uname"><b>Username</b></label>
+    <input type="text" placeholder="Enter Username" name="uname" required>
+
+    <label for="psw"><b>Password</b></label>
+    <input type="password" placeholder="Enter Password" name="psw" required>
+        
+    <button type="submit">Login</button>
+    <!-- <label>
+      <input type="checkbox" checked="checked" name="remember"> Remember me
+    </label> -->
+  </div>
+
+  <!-- <div class="container" style="background-color:#f1f1f1">
+    <button type="button" class="cancelbtn">Cancel</button>
+    <span class="psw">Forgot <a href="#">password?</a></span>
+  </div> -->
+</form>
 
 <% /*
 Like stylesheets, scripts can also be extracted.

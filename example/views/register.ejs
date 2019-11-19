@@ -2,11 +2,12 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<style>
-th {
-  text-align: center;
-}
-</style>
+
+<script>
+  // Script content!
+</script>
+
+<%- contentFor('footer') %>
 
 <% /*
 Content for the `body` section should either be the first thing defined
@@ -14,40 +15,36 @@ in the view, or it has to be declared just like any other section.
 */ %>
 <%- contentFor('body') %>
 
-<table class="table table-bordered">
-  <thead>
-    <tr class="success">
-      <th>Number</th>
-      <th>Username</th>
-      <th>Password</th>
-      <th>First Name</th>
-      <th>Last Name</th>
-      <th>Age</th>
-      <th>Tel.</th>
-      <th>Option</th>
+<html>
+<br><br>
+<form name="form1" method="POST" action="/add">
+  <table>
+    <tr>
+      <td>First Name:</td>
+      <td><input type="text" class="form-control" name="fname" placeholder=""></td>
     </tr>
-  </thead>
-  <tbody>
-    <% result.forEach(function(data) { %>
-    <tr class="success" align="center">
-      <td><%= data.id %></td>
-      <td><%= data.username %></td>
-      <td><%= data.password %></td>
-      <td><%= data.fname %></td>
-      <td><%= data.lname %></td>
-      <td><%= data.age %></td>
-      <td><%= data.tel %></td>
-      <td>
-        <a href="/edit?id=<%= data.id %>"><img src="images/edit.png" width="30" height="30"></a>
-        <a href="/delete?id=<%= data.id %>"><img src='images/delete.png' onclick="return confirm('Do you want to Delete ??')" width='30' height='30'></a>
+    <tr>
+      <td>Last Name:</td>
+      <td><input type="text" class="form-control" name="lname" placeholder=""></td>
+    </tr>
+    <tr>
+      <td>Age:</td>
+      <td><input type="text" class="form-control" name="age" placeholder=""></td>
+    </tr>
+    <tr>
+      <td>Tel:</td>
+      <td><input type="text" class="form-control" name="tel" placeholder=""></td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <button type="submit" name="update" value="2" class="btn btn-primary">Insert</button>
+        <a href="/" type="submit" name="" value="2" class="btn btn-primary">Back</a>
       </td>
     </tr>
-    <% }); %>
-  </tbody>
-  <tr>
-    <td colspan="6"><a href="/" type="submit" class="btn btn-primary">Back</a></td>
-  </tr>
-</table>
+  </table>
+</form>
+
+</html>
 
 <% /*
 When style extraction is enabled, any custom styles that a page defines, will
@@ -68,6 +65,3 @@ is enabled.
 Like stylesheets, scripts can also be extracted.
 This script block will end up at the end of the HTML document.
 */ %>
-<script>
-  // Script content!
-</script>
