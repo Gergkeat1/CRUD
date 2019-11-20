@@ -16,6 +16,7 @@ var LocalStrategy     = require('passport-local').Strategy;
 var sess              = require('express-session');
 var Store             = require('express-session').Store;
 var BetterMemoryStore = require(__dirname + '/memory');
+var BetterMemoryStore = require('session-memory-store')(sess);
 // --------------------------passport-----------------------------------
 
 
