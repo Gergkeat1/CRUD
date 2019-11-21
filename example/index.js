@@ -136,9 +136,10 @@ app.get('/show', (req, res) => {
    //Find all users
   User.findAll().then(x/*x ที่เก็บมาจาก sequelize*/ => {
     var data = JSON.stringify(x, null, 4)
+
     res.render("show", {
 
-      data: data
+      result: data
 
     });
   });
