@@ -150,11 +150,13 @@ app.get('/show', (req, res) => {
 //delete
 
 app.get('/delete', function (req, res) {
-  var id = req.query.id;
-  res.render('show', {
-id
-  });
-  });
+
+  var id = req.query.id ;
+  User.destroy({ where: { id: id } }).then(function(){
+  res.render('show', {});
+})
+});
+
 // app.get('/delete', function (req, res) {
 //   var conn = mysql.createConnection({
 //     host: 'localhost',
