@@ -28,21 +28,7 @@ in the view, or it has to be declared just like any other section.
     </tr>
   </thead>
   <tbody>
-    <% result.forEach(function(data) { %>
-    <tr class="success" align="center">
-      <td><%= data.id %></td>
-      <td><%= data.username %></td>
-      <td><%= data.password %></td>
-      <td><%= data.fname %></td>
-      <td><%= data.lname %></td>
-      <td><%= data.age %></td>
-      <td><%= data.tel %></td>
-      <td>
-        <a href="/edit?id=<%= data.id %>"><img src="images/edit.png" width="30" height="30"></a>
-        <a href="/delete?id=<%= data.id %>"><img src='images/delete.png' onclick="return confirm('Do you want to Delete ??')" width='30' height='30'></a>
-      </td>
-    </tr>
-    <% }); %>
+    <%= data %>
   </tbody>
   <tr>
     <td colspan="6"><a href="/" type="submit" class="btn btn-primary">Back</a></td>

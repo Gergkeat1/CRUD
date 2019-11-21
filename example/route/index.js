@@ -6,8 +6,7 @@ var http = require('http');
 var url = require('url');
 var app = express();
 var router = express.Router();
-var sequelize = require('sequelize');
-var User = require("./models/User");
+var User=require("../models/User")
 
 
 
@@ -91,14 +90,14 @@ app.post('/add', function (req, res) {
   });
 
   var fname = req.body.fname,
-    username = req.body.username,
-    password = req.body.password,
-    lname = req.body.lname,
-    age = req.body.age,
-    tel = req.body.tel;
+  username = req.body.username,  
+  password = req.body.password, 
+  lname = req.body.lname, 
+  age = req.body.age, 
+  tel = req.body.tel;
 
   var sql = "INSERT INTO test_profile (username,password,fname, lname, age, tel) VALUES ('" + username + "','" + password + "','" + fname + "', '" + lname + "', '" + age + "', '" + tel + "')";
-  conn.query(sql, [username, password, fname, lname, age, tel], function (err, data) {
+  conn.query(sql, [username,password,fname, lname, age, tel], function (err, data) {
     if (err) {
       console.log("Error inserted into db");
       res.redirect('/show');
@@ -109,44 +108,21 @@ app.post('/add', function (req, res) {
   });
 });
 //show list
-// app.get('/show', function (req, res) {
+app.get('/show', function (req, res) {
 
-//   var conn = mysql.createConnection({
-//     host: 'localhost',
-//     user: 'root',
-//     password: 'root',
-//     database: 'test'
-//   });
-
-//   var sql = "SELECT * FROM test_profile";
-//   conn.query(sql, function (err, result) {
-//     res.render('show', { result: result });
-//   });
-// });
-
-
-//show list with sequelist
-
-app.get('/show', (req, res) => {
-
-
-  // User.findAll().then(test_proflie => 
-  //   res.json(result))
-
-   //Find all users
-  User.findAll().then(x/*x ที่เก็บมาจาก sequelize*/ => {
-    var data = JSON.stringify(x, null, 4)
-    res.render("show", {
-
-      data: data
-
-    });
+  var conn = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: 'root',
+    database: 'test'
   });
-})
 
+  var sql = "SELECT * FROM test_profile";
+  conn.query(sql, function (err, result) {
+    res.render('show', { result: result });
+  });
+});
 
-
-//delete
 app.get('/delete', function (req, res) {
   var conn = mysql.createConnection({
     host: 'localhost',
@@ -186,26 +162,26 @@ app.get('/edit', function (req, res) {
   var sql = "SELECT * FROM test_profile WHERE id = '" + id + "'";
   conn.query(sql, function (err, result) {
     result.forEach(function (data) {
-
+      
       var username = data.username;
       var password = data.password;
       var fname = data.fname;
       var lname = data.lname;
       var age = data.age;
       var tel = data.tel;
-      res.render('edit', { username: username, password: password, fname: fname, lname: lname, age: age, tel: tel, id: id });
+      res.render('edit', { username: username,password: password,fname: fname, lname: lname, age: age, tel: tel, id: id });
     });
   });
 });
 //update
 app.get('/update', function (req, res) {
 
-  var fname = req.query.fname,
-    username = req.body.username,
-    password = req.body.password,
-    lname = req.query.lname,
-    age = req.query.age,
-    tel = req.query.tel;
+  var fname = req.query.fname, 
+  username = req.body.username,  
+  password = req.body.password,
+  lname = req.query.lname, 
+  age = req.query.age, 
+  tel = req.query.tel;
 
   var conn = mysql.createConnection({
 
