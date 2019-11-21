@@ -27,9 +27,30 @@ in the view, or it has to be declared just like any other section.
       <th>Option</th>
     </tr>
   </thead>
-  <%=result%>
+  <% result.forEach(data => { %>
+    <tbody>
+      <tr>
+      <td><%=data.id%></td>
+      <td><%=data.username%></td>
+      <td><%=data.password%></td>
+      <td><%=data.fname%></td>
+      <td><%=data.lname%></td>
+      <td><%=data.age%></td>
+      <td><%=data.tel%></td>
+      <td>
+        <a href="/delete?id=<%=data.id%>">
+            DELETE
+        </a>
+        <a href="/edit">
+          EDIT
+        </a>
+      </td>
+      </tr>
+    </tbody>
+<% }) %>
+  <%%>
   <tr>
-    <td colspan="6"><a href="/" type="submit" class="btn btn-primary">Back</a></td>
+    <td colspan="8"><a href="/" type="submit" class="btn btn-primary">Back</a></td>
   </tr>
 </table>
 

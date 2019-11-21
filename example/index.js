@@ -135,11 +135,11 @@ app.get('/show', (req, res) => {
 
    //Find all users
   User.findAll().then(x/*x ที่เก็บมาจาก sequelize*/ => {
-    var data = JSON.stringify(x, null, 4)
+    // var data = JSON.stringify(x, null, 4)
 
     res.render("show", {
 
-      result: data
+      result: x
 
     });
   });
@@ -148,27 +148,34 @@ app.get('/show', (req, res) => {
 
 
 //delete
-app.get('/delete', function (req, res) {
-  var conn = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'root',
-    database: 'test'
-  });
-  conn.connect(function (err, result) {
-    if (err) throw err;
-    console.log(result);
-    var id = req.query.id;
-    console.log("ID is = " + id);
-    var sql = "DELETE FROM test_profile WHERE id = '" + id + "'";
-    conn.query(sql, function (err, result) {
-      if (err) throw err;
-      console.log("Number of records deleted" + result.affectedRows);
-      res.redirect('show');
-    });
-  });
 
-});
+app.get('/delete', function (req, res) {
+  var id = req.query.id;
+  res.render('show', {
+id
+  });
+  });
+// app.get('/delete', function (req, res) {
+//   var conn = mysql.createConnection({
+//     host: 'localhost',
+//     user: 'root',
+//     password: 'root',
+//     database: 'test'
+//   });
+//   conn.connect(function (err, result) {
+//     if (err) throw err;
+//     console.log(result);
+//     var id = req.query.id;
+//     console.log("ID is = " + id);
+//     var sql = "DELETE FROM test_profile WHERE id = '" + id + "'";
+//     conn.query(sql, function (err, result) {
+//       if (err) throw err;
+//       console.log("Number of records deleted" + result.affectedRows);
+//       res.redirect('show');
+//     });
+//   });
+// });
+
 //edit
 app.get('/edit', function (req, res) {
   var conn = mysql.createConnection({
