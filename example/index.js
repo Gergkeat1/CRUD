@@ -72,42 +72,62 @@ app.get('/add', function (req, res) {
 
 });
 
+// app.post('/add', function (req, res) {
+
+//   res.locals = {
+//     title: 'Test',
+//   };
+
+//   var conn = mysql.createConnection({
+//     host: 'localhost',
+//     user: 'root',
+//     password: 'root',
+//     database: 'test'
+//   });
+
+//   conn.connect(function (err) {
+//     if (err) throw err;
+//     console.log("Connected!");
+//   });
+
+//   var fname = req.body.fname,
+//     username = req.body.username,
+//     password = req.body.password,
+//     lname = req.body.lname,
+//     age = req.body.age,
+//     tel = req.body.tel;
+
+//   var sql = "INSERT INTO test_profile (username,password,fname, lname, age, tel) VALUES ('" + username + "','" + password + "','" + fname + "', '" + lname + "', '" + age + "', '" + tel + "')";
+//   conn.query(sql, [username, password, fname, lname, age, tel], function (err, data) {
+//     if (err) {
+//       console.log("Error inserted into db");
+//       res.redirect('/show');
+//     } else {
+//       console.log("Successfully inserted into db");
+//       res.redirect('/show');
+//     }
+//   });
+// });
+
+//Add by sequelize
 app.post('/add', function (req, res) {
 
-  res.locals = {
-    title: 'Test',
-  };
-
-  var conn = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'root',
-    database: 'test'
-  });
-
-  conn.connect(function (err) {
-    if (err) throw err;
-    console.log("Connected!");
-  });
-
   var fname = req.body.fname,
-    username = req.body.username,
-    password = req.body.password,
-    lname = req.body.lname,
-    age = req.body.age,
-    tel = req.body.tel;
+  username = req.body.username,
+  password = req.body.password,
+  lname = req.body.lname,
+  age = req.body.age,
+  tel = req.body.tel;
 
-  var sql = "INSERT INTO test_profile (username,password,fname, lname, age, tel) VALUES ('" + username + "','" + password + "','" + fname + "', '" + lname + "', '" + age + "', '" + tel + "')";
-  conn.query(sql, [username, password, fname, lname, age, tel], function (err, data) {
-    if (err) {
-      console.log("Error inserted into db");
-      res.redirect('/show');
-    } else {
-      console.log("Successfully inserted into db");
-      res.redirect('/show');
-    }
+  User.create({ fname: fname, username: username, password: password,
+  lname: lname, age: age, tel: tel }).then(fname => {
+  res.redirect('/show');
+
+
   });
 });
+
+
 //show list
 // app.get('/show', function (req, res) {
 
@@ -151,9 +171,18 @@ app.get('/show', (req, res) => {
 
 app.get('/delete', function (req, res) {
 
-  var id = req.query.id ;
+  
+  var id = req.query.id_del ;
   User.destroy({ where: { id: id } }).then(function(){
-  res.render('show', {});
+
+    //ส่งค่ากลับไปshowที่หน้า show
+    User.findAll().then(x => {
+      res.render("show", {
+        result: x
+      });
+    });
+
+
 })
 });
 
@@ -180,65 +209,113 @@ app.get('/delete', function (req, res) {
 
 //edit
 app.get('/edit', function (req, res) {
-  var conn = mysql.createConnection({
+  var id = req.query.id_edit;
+  User.findAll({where: {id:id}}).then(User => {
+    User.forEach(function (data) {
 
-    host: 'localhost',
-    user: 'root',
-    password: 'root',
-    database: 'test'
-  });
-
-  conn.connect(function (err) {
-    if (err) throw err;
-    console.log("Connected!");
-  });
-  var id = req.query.id;
-  var sql = "SELECT * FROM test_profile WHERE id = '" + id + "'";
-  conn.query(sql, function (err, result) {
-    result.forEach(function (data) {
-
-      var username = data.username;
-      var password = data.password;
-      var fname = data.fname;
-      var lname = data.lname;
-      var age = data.age;
-      var tel = data.tel;
-      res.render('edit', { username: username, password: password, fname: fname, lname: lname, age: age, tel: tel, id: id });
-    });
+            var username = data.username;
+            var password = data.password;
+            var fname = data.fname;
+            var lname = data.lname;
+            var age = data.age;
+            var tel = data.tel;
+            res.render('edit', { username: username, password: password, fname: fname, lname: lname, age: age, tel: tel, id: id });
+          });
   });
 });
+
+
+
+// app.get('/edit', function (req, res) {
+//   var conn = mysql.createConnection({
+
+//     host: 'localhost',
+//     user: 'root',
+//     password: 'root',
+//     database: 'test'
+//   });
+
+//   conn.connect(function (err) {
+//     if (err) throw err;
+//     console.log("Connected!");
+//   });
+//   var id = req.query.id;
+//   var sql = "SELECT * FROM test_profile WHERE id = '" + id + "'";
+//   conn.query(sql, function (err, result) {
+//     result.forEach(function (data) {
+
+//       var username = data.username;
+//       var password = data.password;
+//       var fname = data.fname;
+//       var lname = data.lname;
+//       var age = data.age;
+//       var tel = data.tel;
+//       res.render('edit', { username: username, password: password, fname: fname, lname: lname, age: age, tel: tel, id: id });
+//     });
+//   });
+// });
+
+
+
 //update
 app.get('/update', function (req, res) {
 
   var fname = req.query.fname,
-    username = req.body.username,
-    password = req.body.password,
+    username = req.query.username,
+    password = req.query.password,
     lname = req.query.lname,
     age = req.query.age,
+    id = req.query.update,
     tel = req.query.tel;
 
-  var conn = mysql.createConnection({
 
-    host: 'localhost',
-    user: 'root',
-    password: 'root',
-    database: 'test'
-  });
 
-  conn.connect(function (err) {
-    if (err) throw err;
-    console.log("Connected!");
-    var id = req.query.update;
-    console.log("ID is = " + id);
-    var sql = "UPDATE test_profile SET username = '" + username + "',password = '" + password + "',fname = '" + fname + "', lname = '" + lname + "', age = '" + age + "', tel = '" + tel + "' WHERE id = '" + id + "'";
-    conn.query(sql, function (err, result) {
-      if (err) throw err;
-      console.log(result.affectedRows + " record(s) updated");
-      res.redirect('show');
+  User.update({fname: fname, username: username, password: password,
+    lname: lname, age: age, tel: tel }, {
+    where: {
+      id: id
+    }
+  }).then(() => {
+    User.findAll().then(x => {
+      res.render("show", {
+        result: x
+      });
     });
   });
-
 });
+
+
+// app.get('/update', function (req, res) {
+
+//   var fname = req.query.fname,
+//     username = req.body.username,
+//     password = req.body.password,
+//     lname = req.query.lname,
+//     age = req.query.age,
+//     tel = req.query.tel;
+
+//   var conn = mysql.createConnection({
+
+//     host: 'localhost',
+//     user: 'root',
+//     password: 'root',
+//     database: 'test'
+//   });
+
+//   conn.connect(function (err) {
+//     if (err) throw err;
+//     console.log("Connected!");
+//     var id = req.query.update;
+//     console.log("ID is = " + id);
+//     var sql = "UPDATE test_profile SET username = '" + username + "',password = '" + password + "',fname = '" + fname + "', lname = '" + lname + "', age = '" + age + "', tel = '" + tel + "' WHERE id = '" + id + "'";
+//     conn.query(sql, function (err, result) {
+//       if (err) throw err;
+//       console.log(result.affectedRows + " record(s) updated");
+//       res.redirect('show');
+//     });
+//   });
+
+// });
 
 var port = 3000;
 app.listen(port, function () {

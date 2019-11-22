@@ -10,7 +10,7 @@ in the view, or it has to be declared just like any other section.
 */ %>
 <%- contentFor('body') %>
 <form name="form1" method="GET" action="/update">
-<table class="table table-bordered">
+<table class="table table-bordered" widht="80%">
   <thead>
     <tr class="success">
       <th>Number</th>
@@ -24,9 +24,10 @@ in the view, or it has to be declared just like any other section.
   </thead>
   <tbody>
     <tr>
-      <td><%= id %></td>
+      
+      <td><input type="text" class="form-control" name="id" value="<%= id %>" disabled></td>
       <td><input type="text" class="form-control" name="username" value="<%= username %>"></td>
-      <td><input type="text" class="form-control" name="Password" value="<%= password %>"></td>
+      <td><input type="text" class="form-control" name="password" value="<%= password %>"></td>
       <td><input type="text" class="form-control" name="fname" value="<%= fname %>"></td>
       <td><input type="text" class="form-control" name="lname" value="<%= lname %>"></td>
       <td><input type="text" class="form-control" name="age" value="<%= age %>"></td>
