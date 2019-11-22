@@ -1,4 +1,6 @@
-var sequelize = require('sequelize');
+var sequelize = require('sequelize'),
+passportLocalSequelize = require('passport-local-sequelize');
+
 var db={}
 
 

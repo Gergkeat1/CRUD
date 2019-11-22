@@ -8,6 +8,8 @@ var app = express();
 var router = express.Router();
 var sequelize = require('sequelize');
 var User = require("./models/User");
+var session = require('express-session')
+
 
 
 
@@ -50,14 +52,6 @@ app.get('/', function (req, res) {
 });
 
 //Login
-
-app.get('/login', function (req, res) {
-
-  res.render('login', {
-
-  });
-
-});
 
 //add
 app.get('/add', function (req, res) {

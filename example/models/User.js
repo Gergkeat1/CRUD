@@ -1,5 +1,10 @@
-var Sequelize = require('sequelize')
+var Sequelize = require('sequelize'),
+passportLocalSequelize = require('passport-local-sequelize');
+
 var db = require("../database/connection")
+var User = passportLocalSequelize.defineUser(sequelize, {
+    favoriteColor: Sequelize.STRING
+});
 
 module.exports= db.sequelize.define(
     'test_profile'/* MOU name*/,{

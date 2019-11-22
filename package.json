@@ -10,28 +10,32 @@
   "version": "2.5.0",
   "main": "lib/express-layouts.js",
   "dependencies": {
+    "bcrypt": "^3.0.7",
     "body-parser": "^1.19.0",
     "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.4",
     "crypto": "^1.0.1",
     "express-session": "^1.17.0",
     "mariadb": "^2.1.2",
     "memory": "0.0.3",
+    "morgan": "^1.9.1",
     "mysql": "^2.17.1",
     "mysql2": "^2.0.1",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
-    "pg": "^7.12.1",
+    "passport-local-sequelize": "^0.9.0",
+    "pg": "^7.14.0",
     "pg-hstore": "^2.3.3",
     "sequelize": "^6.0.0",
     "sqlite3": "^4.1.0",
     "tedious": "^6.6.2"
   },
   "devDependencies": {
-    "express": "*",
-    "supertest": "*",
     "ejs": "^2.6.1",
+    "express": "^4.17.1",
     "mocha": "*",
-    "should": "*"
+    "should": "*",
+    "supertest": "*"
   },
   "optionalDependencies": {},
   "scripts": {
